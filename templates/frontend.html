@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Operational Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stat.css') }}">
+</head>
+<header>
+    <!--img src='static\knorr_logo.png' alt='logo of company'-->
+    <div class="logo-container">
+        <!-- Information logo with a background color -->
+        <div class="logo-wrapper" id="info-logo-wrapper">
+            <!--img src="static\info_new.jpg" alt="Information Logo" class="logo" id="info-logo" title="Click here for more information"-->
+			            <a href="#" style="text-decoration: none;"> <!-- Link to another page -->
+    <button class="btn" title="Click here for information" style="background: none; border: none; padding: 0;">
+        <img src="static\info_new.jpg" alt="Help" style="width: 50px; height: 50px;"/>
+    </button>
+           </a>
+        </div>
+        <!-- Help logo with a background color -->
+        <div class="logo-wrapper" id="help-logo-wrapper">
+            <a href="#" style="text-decoration: none;"> <!-- Link to another page -->
+    <button class="btn" title="Click here for help" style="background: none; border: none; padding: 0;">
+        <img src="static\help_new.jpg" alt="Help" style="width: 50px; height: 50px;"/>
+    </button>
+           </a>
+
+        </div>
+    </div>
+</header>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Statistical Operational Data</h2>
+        <form id="uploadForm" action="/" method="POST" enctype="multipart/form-data">     
+            <!-- File Upload Section -->
+            <div class="mb-3">
+                <div class="file-container">
+                    <label class="form-label">Binary Schema File</label>
+                    <input class="form-control" type="file" name="schema" id="schema" required onchange="validateFileExtension('schema', '.bin')" style="display: none;">
+                    <div id="schema-status" class="status-bar">No file chosen</div>
+                    <button type="button" class="file-button" onclick="triggerFileInput('schema')">...</button>
+                </div>
+                <div id="schema-warning" class="warning-bar" style="display: none;">Please choose a valid .bin file!</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="file-container">
+                    <label class="form-label">Binary Data File</label>
+                    <input class="form-control" type="file" name="data" id="data" required onchange="validateFileExtension('data', '.bin')" style="display: none;">
+                    <div id="data-status" class="status-bar">No file chosen</div>
+                    <button type="button" class="file-button" onclick="triggerFileInput('data')">...</button>
+                </div>
+                <div id="data-warning" class="warning-bar" style="display: none;">Please choose a valid .bin file!</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="file-container">
+                    <label class="form-label">CSV Schema File</label>
+                    <input class="form-control" type="file" name="csvfile" id="csvfile" required onchange="validateFileExtension('csvfile', '.csv')" style="display: none;">
+                    <div id="csvfile-status" class="status-bar">No file chosen</div>
+                    <button type="button" class="file-button" onclick="triggerFileInput('csvfile')">...</button>
+                </div>
+                <div id="csvfile-warning" class="warning-bar" style="display: none;">Please choose a valid .csv file!</div>
+            </div>
+
+            <div class="submit-container">
+                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+            </div> 
+          
+            <div class="mb-3 mt-3">
+                <div class="d-flex align-items-center gap-3"> 
+                    <label for="options" class="form-label mb-0">Select Region</label>
+                    <div class="dropdown">
+                        <select id="options" class="form-select" aria-label="Region selection" onchange="updateTable()">
+                            <option value="option1" selected>All SOD Data</option>
+                            <option value="option2">General Region</option>
+                            <option value="option3">EM Region</option>
+                            <option value="option4">BE Region</option>
+                            <option value="option5">PVU Region</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="downloadSelection()">Download CSV</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Table for Preview Section -->
+        <div class="mt-4">
+            <label for="output" class="form-label">Preview</label>
+            <div id="table-container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr id="table-header">
+                            <th>DataID</th>
+                            <th>Size</th>
+                            <th>Offset</th>
+                            <th>Description</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>Operating time</td>
+                            <td>149744</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>Odometer</td>
+                            <td>641</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>Operating time @speed</td>
+                            <td>11368</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>Time train is in state braking</td>
+                            <td>17012</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>1</td>
+                            <td>4</td>
+                            <td>Time train is in state braking v > 0</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>Time Functional Carrier performing EP service brake.</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>1</td>
+                            <td>6</td>
+                            <td>Time Functional Carrier performing EP service brake v>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function triggerFileInput(inputId) {
+            document.getElementById(inputId).click(); 
+        }
+
+        function updateStatus(inputId) {
+            var fileInput = document.getElementById(inputId);
+            var statusBar = document.getElementById(inputId + '-status');
+            if (fileInput.files.length > 0) {
+                statusBar.textContent = fileInput.files[0].name; 
+            } else {
+                statusBar.textContent = 'No file chosen'; 
+            }
+        }
+
+        function validateFileExtension(inputId, allowedExtension) {
+            var fileInput = document.getElementById(inputId);
+            var fileName = fileInput.files[0]?.name || '';
+            var fileExt = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
+
+            // Check if the selected file extension matches the allowed extension
+            if (fileExt === allowedExtension.slice(1).toLowerCase()) {
+                document.getElementById(inputId + '-warning').style.display = 'none';
+                document.getElementById(inputId + '-status').style.backgroundColor = '#444'; 
+            } else {
+                document.getElementById(inputId + '-warning').style.display = 'block';
+                document.getElementById(inputId + '-status').style.backgroundColor = '#ff6b6b'; 
+                fileInput.value = '';  // Reset the file input if invalid file selected
+            }
+
+            updateStatus(inputId);
+        }
+
+        function submitForm() {
+            var isValid = true;
+            var requiredFiles = ['schema', 'data', 'csvfile'];
+
+            requiredFiles.forEach(function(fileId) {
+                var fileInput = document.getElementById(fileId);
+                var statusBar = document.getElementById(fileId + '-status');
+                if (fileInput.files.length === 0) {
+                    statusBar.textContent = 'Please upload a file!!';
+                    statusBar.style.backgroundColor = 'white'; 
+					statusBar.style.color = 'red';
+					statusBar.style.border = '2px solid red';
+                    isValid = false;
+                } else {
+                    statusBar.textContent = fileInput.files[0].name; 
+                    statusBar.style.backgroundColor = '#444'; 
+                }
+            });
+
+            if (isValid) {
+                document.getElementById("uploadForm").submit();
+            }
+        }
+
+        // Update table based on dropdown selection
+        function updateTable() {
+            var selectedOption = document.getElementById("options").value;
+            var tableHeader = document.getElementById("table-header");
+            var tableBody = document.getElementById("table-body");
+
+            // Check if "All SOD Data" is selected
+            if (selectedOption === "option1") {
+                // Add Category column to header
+                if (!document.querySelector("#table-header th:nth-child(6)")) {
+                    var categoryHeader = document.createElement("th");
+                    categoryHeader.textContent = "Category";
+                    tableHeader.appendChild(categoryHeader);
+
+                    // Add Category column to each row in the body
+                    var rows = tableBody.getElementsByTagName("tr");
+                    for (var row of rows) {
+                        var categoryCell = document.createElement("td");
+                        categoryCell.textContent = "General";  // Default value for Category
+                        row.appendChild(categoryCell);
+                    }
+                }
+            } else {
+                // Remove Category column from header and body
+                if (document.querySelector("#table-header th:nth-child(6)")) {
+                    var categoryHeader = document.querySelector("#table-header th:nth-child(6)");
+                    categoryHeader.remove();
+
+                    var rows = tableBody.getElementsByTagName("tr");
+                    for (var row of rows) {
+                        row.deleteCell(5);  // Removing the Category cell (6th column)
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

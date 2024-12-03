@@ -1,0 +1,53 @@
+<!-- templates/result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processed Files</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Files Processed Successfully</h1>
+        
+        <!-- Validation Message -->
+        <div class="alert alert-success">
+            <strong>{{ success_message }}</strong>
+        </div>
+
+        <!-- Display all students -->
+        <h4 class="mt-4">List of All Students:</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in all_students %}
+                <tr>
+                    <td>{{ student['Student_ID'] }}</td>
+                    <td>{{ student['Name'] }}</td>
+                    <td>{{ student['Department'] }}</td>
+                    <td>{{ student['Marks'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Links to download CSV files -->
+        <h4>Click to download the generated CSV files for each department:</h4>
+        <ul>
+            <li><a href="{{ url_for('download_output', filename='CSE.csv') }}" class="btn btn-success" download>Download CSE CSV</a></li>
+            <li><a href="{{ url_for('download_output', filename='ECE.csv') }}" class="btn btn-success" download>Download ECE CSV</a></li>
+            <li><a href="{{ url_for('download_output', filename='ME.csv') }}" class="btn btn-success" download>Download ME CSV</a></li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

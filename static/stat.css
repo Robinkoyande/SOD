@@ -1,0 +1,315 @@
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85));
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+h2 {
+    background-color: #00457e;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;  
+}
+
+label {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+    white-space: nowrap; 
+    font-size: 14px;
+    display: inline-block;
+    width: 150px; 
+}
+
+.file-container {
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: nowrap; 
+    width: 100%;
+}
+
+.file-container input[type="file"] {
+    opacity: 0;  
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    cursor: pointer;
+    z-index: -1; 
+}
+
+.status-bar {
+    font-size: 14px;
+    color: white;
+    background-color: #444;
+    padding: 5px;
+    border-radius: 4px;
+    width: 70%; 
+    max-width: 600px; 
+    display: inline-block;
+    white-space: nowrap; 
+}
+
+.file-button {
+    padding: 6px 12px;
+    background-color: #00457e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.file-button:hover {
+    background-color: darkblue;
+}
+
+.warning-bar {
+    font-size: 14px;
+    color: red;
+    background-color: #fff3f3;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 5px;
+	width: 650px;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+textarea#output {
+    width: 100%; 
+    min-height: 200px; 
+    height: 30vh; /* Default height based on viewport height */
+    resize: vertical; /* Allow the textarea to be resized vertically */
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    color: black;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #00457e; /* Change border color on focus */
+}
+
+@media (max-width: 768px) {
+    textarea#output {
+        height: 20vh; /* Adjust the height to 20% of the viewport height on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    textarea#output {
+        height: 15vh; /* Adjust the height to 15% of the viewport height on extra small screens */
+    }
+}
+
+img {
+    width: 300px;    
+    height: auto;    
+    margin-right: 20px; 
+}
+
+.submit-container {
+    display: flex;               
+    justify-content: flex-start; 
+    margin-left: 300px;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-image {
+    width: 150px;
+    height: auto;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-left: auto;
+}
+
+.logo {
+    width: 40px;
+    height: auto;
+    position: relative;
+}
+
+.logo::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    opacity: 0; 
+    visibility: hidden; 
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
+}
+
+.logo:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Styling for the file summary table */
+.file-summary {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.file-summary table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.file-summary th, .file-summary td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Flex layout for file input section and table */
+.file-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+    justify-content: space-between;
+}
+
+.file-container input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    cursor: pointer;
+    z-index: -1;
+}
+
+.file-button {
+    padding: 6px 12px;
+    background-color: #00457e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.file-button:hover {
+    background-color: darkblue;
+}
+
+/* Add solid borders to table cells and make sure the borders collapse */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders collapse into one */
+}
+
+/* Add border to the table header cells */
+th {
+    border: 2px solid black; /* Solid black border for header cells */
+    padding: 8px;
+    background-color: #f8f9fa; /* Light grey background for header */
+    text-align: center;
+}
+
+/* Add border to the table data cells */
+td {
+    border: 2px solid black; /* Solid black border for data cells */
+    padding: 8px;
+    background-color: #ffffff; /* White background for data cells */
+    text-align: center;
+}
+
+/* Align the text in the 4th column to the left */
+table td:nth-child(4) {
+    text-align: left; /* Align text to the left */
+}
+/*table th:nth-child(4){
+	text-align: left;
+}*/
+/* Optionally, you can change the border or background for the rows */
+tr {
+    background-color: #f2f2f2; /* Light grey background for rows */
+}
+
+/* Add hover effect for rows */
+tr:hover {
+    background-color: #ddd; /* Slightly darker grey when hovering over rows */
+}
+
+/* Footer Styling */
+.d-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 50%;  /* Adjust the width of the dropdown section as needed */
+    justify-content: space-between; /* This will align the dropdown and button side by side */
+}
+
+.d-flex select {
+    padding: 6px 12px;
+    background-color: #fff;
+    color: black;
+    border: 1px solid #00457e;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 350px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.d-flex .btn-success {
+    padding: 6px 12px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+    width: auto;
+}
+
+.d-flex .btn-success:hover {
+    background-color: darkgreen;
+}
+
+@media (max-width: 768px) {
+    .d-flex {
+        width: 100%; /* Let the dropdown and button take full width on small screens */
+        flex-direction: column; /* Stack them vertically */
+        align-items: stretch; /* Stretch them to fill the available space */
+    }
+
+    .d-flex select, .d-flex .btn-success {
+        width: 100%; /* Make the dropdown and button full-width on small screens */
+    }
+}
